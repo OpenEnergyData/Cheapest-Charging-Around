@@ -1,1 +1,1 @@
-# Cheapest-Charging-Around-Open-Energy-Data-Hackdays-
+# Cheapest-Charging-Around-Open-Energy-Data-Hackdays

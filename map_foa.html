@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cheapest Charging Around</title>
+    <!--Include Leaflet CSS file in the head section of your document:-->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"/>
+    <!--Include Leaflet JavaScript file after Leaflet’s CSS:-->
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+​<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+    <style>
+        #mapid {
+            height: 500px;
+            width: 1000px;
+​
+        }
+    </style>
+​
+​
+</head>
+<body>
+<div id='mapid'></div>
+<script >
+$.getJSON("https://data.geo.admin.ch/ch.bfe.ladestellen-elektromobilitaet/data/ch.bfe.ladestellen-elektromobilitaet_de.json", function(data) {
+    L.geoJson(data).addTo(mymap);
+});
+    // initialize the map
+    var mymap = L.map('mapid').setView([46.8182, 8.2275], 13);
+    // load a tile layer
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 18,
+        minZoom: 4,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(mymap);
+    //Diese Quelle Benutzen!
+    //https://data.geo.admin.ch/ch.bfe.ladestellen-elektromobilitaet/data/ch.bfe.ladestellen-elektromobilitaet_de.json
+
+</script>
+</body>
+</html>

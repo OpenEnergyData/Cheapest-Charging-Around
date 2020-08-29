@@ -30,7 +30,7 @@ To allow a user to compare the available tariff plans for a given charging stati
 * The freely accessible FSDI API at api.geo.admin.ch to retrieve the full station and plug informations
 * Our static table (filled as a google sheet then transformed to JSON for the webapp) with the tariff plans information.
 
-When the user picks a charging station, the application retrieves the ID from the geoJSON and then uses it to make an API call to api.geo.admin.ch. This retrieves all the needed information about the available plugs at the station. The app then filters the tariff table to present the valid plans and the pricing information.
+When the user picks a charging station, the application retrieves the ID from the geoJSON and then uses it to make an API call to api.geo.admin.ch. This retrieves all the needed information about the available plugs at the station. The user than chooses a certain plug. The app then filters the tariff table for this plug to present the valid plans and the pricing information.
 
 Filter parameters are:
 <table>
@@ -122,13 +122,13 @@ You can find the table [here](https://docs.google.com/spreadsheets/d/1dw7tkYa0nS
 </table>
 
 # Known problems and possible ameliorations
-Ours is a rudimentary solution that must be considered as an early-stage POC.
+Our solution is very rudimentary and must be considered as an early-stage POC.
 
 ## The main issues are:
-* A static and still rudimentary tariff "database"
+* We have a static and still rudimentary tariff "database"
 * Incomplete tariff data
 * Data model has to be optimized
-* Filter to be revised
+* Filter function optimization
 * Not integrated with ich-tanke-strom.ch
 * Impossible to calculate the total cost of a charge
 * Still almost impossible for a user to make meaningful comparisons because of the different price calculations
@@ -141,9 +141,10 @@ Ours is a rudimentary solution that must be considered as an early-stage POC.
 * Integration user data such as car type, battery status, ...
 * Integration of parking costs
 * Develop a real webapp :smile:
+* Develop a price comparing site à la comparis, Djungelkompass
 
 # Lessons learned
 * The data needs to be open, easily and freely accessible in order to develop such an applications
-* There is a need for a standard way to describe the costs ot make a meaningful comparison possible
+* There is a need for a standard way to describe the costs to make a meaningful comparison possible
 * It is a pleasure to work with the freely available DIEMO data (both the static JSON than via the FSDI API)
-* Open Data is nice!
+* Open Data is nice and saves a lot of nerves!

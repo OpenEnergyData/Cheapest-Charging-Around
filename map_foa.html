@@ -36,8 +36,16 @@
 
 
     function onClick(e) {
-        console.log(e.propagatedFrom.feature.id);
-        document.getElementById('Labeltxt').innerHTML = e.propagatedFrom.feature.id;
+        var stationId = e.propagatedFrom.feature.id;
+        console.log(e);
+        document.getElementById('Labeltxt').innerHTML = stationId;
+       // http://api.geo.admin.ch/rest/services/api/MapServer/find?layer=ch.bfe.ladestellen-elektromobilitaet&searchText=CH*E4U*E00542&searchField=ChargingStationId&returnGeometry=false
+       // where <CH*E4U*E00542> is the ID
+        url =
+            'http://api.geo.admin.ch/rest/services/api/MapServer/find?layer=ch.bfe.ladestellen-elektromobilitaet&searchText='
+        +stationId+'&searchField=ChargingStationId&returnGeometry=false';
+        $.get(url);
+
     }
 
     /*

@@ -34,17 +34,68 @@
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(mymap);
 
+    // Our own data-table is in here:
+    var priceInfoData;
+    // Code from:
+    // https://www.geeksforgeeks.org/how-to-read-a-local-text-file-using-javascript/
+    $.getJSON('data.json', function(data) {
+        console.log(data);
+        priceInfoData = data;
+    });
 
     function onClick(e) {
         var stationId = e.propagatedFrom.feature.id;
-        console.log(e);
+        //console.log(e);
         document.getElementById('Labeltxt').innerHTML = stationId;
        // http://api.geo.admin.ch/rest/services/api/MapServer/find?layer=ch.bfe.ladestellen-elektromobilitaet&searchText=CH*E4U*E00542&searchField=ChargingStationId&returnGeometry=false
        // where <CH*E4U*E00542> is the ID
         url =
             'http://api.geo.admin.ch/rest/services/api/MapServer/find?layer=ch.bfe.ladestellen-elektromobilitaet&searchText='
         +stationId+'&searchField=ChargingStationId&returnGeometry=false';
-        $.get(url);
+
+
+
+        var request = new XMLHttpRequest();
+
+        request.open('GET', url, true);
+
+
+        var operatorName;
+        request.onload = function () {
+            var data = JSON.parse(this.response);
+            //console.log(data);
+            OnGotApiresponse(data)
+        };
+
+        request.send();
+
+        //console.log(url)
+       /*var response;
+
+        $.get(url, function(data) {
+            console.log('response:'+ data);
+            response = data;
+            $( "body" )
+                .append(data.body);
+            console.log('response:'+ data.body);
+        });*/
+/*
+        $.ajax({
+            async: false,
+            type: 'GET',
+            url: url,
+            success: function(data){
+                console.log('ajax response:'+ data.responseText);
+            }
+        });*/
+
+/*        const request = async () => {
+            const response = await fetch(url);
+            const json = await response.json();
+            console.log('json:'+JSON.parse(json));
+        }
+
+        request();*/
 
     }
 
@@ -64,14 +115,15 @@
     });
     //console.log(geoJSONdata);*/
 
-    // Our own data-table is in here:
-    var priceInfoData;
-    // Code from:
-    // https://www.geeksforgeeks.org/how-to-read-a-local-text-file-using-javascript/
-    $.getJSON('data.json', function(data) {
-        console.log(data);
-        priceInfoData = data;
-    });
+    function OnGotApiresponse(data) {
+        operatorName = data.results[0].attributes.OperatorName;
+        document.getElementById('Labeltxt').innerHTML = operatorName;
+        for (i = 0; i < priceInfoData.length; i++) {
+            if (priceInfoData[i].tariff_provier.toUpperCase() === operatorName.toUpperCase()) {
+                console.log(priceInfoData[i])
+            }
+        }
+    }
 </script>
 </body>
 </html>

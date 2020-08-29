@@ -8,34 +8,44 @@
     <!--Include Leaflet JavaScript file after Leaflet’s CSS:-->
     <!-- Make sure you put this AFTER Leaflet's CSS -->
     <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
-​<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
     <style>
         #mapid {
             height: 500px;
             width: 1000px;
-​
+
         }
     </style>
-​
-​
+
+
 </head>
 <body>
 <div id='mapid'></div>
+<label id = "Labeltxt">temp</label>
 <script >
 $.getJSON("https://data.geo.admin.ch/ch.bfe.ladestellen-elektromobilitaet/data/ch.bfe.ladestellen-elektromobilitaet_de.json", function(data) {
-    L.geoJson(data).addTo(mymap);
+    L.geoJson(data).addTo(mymap).on('click', onClick);
 });
     // initialize the map
-    var mymap = L.map('mapid').setView([46.8182, 8.2275], 13);
+    const mymap = L.map('mapid').setView([46.8182, 8.2275], 13);
     // load a tile layer
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 18,
         minZoom: 4,
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(mymap);
+    }).addTo(mymap)
+
     //Diese Quelle Benutzen!
     //https://data.geo.admin.ch/ch.bfe.ladestellen-elektromobilitaet/data/ch.bfe.ladestellen-elektromobilitaet_de.json
 
+    function onClick(e) {
+        console.log(e.propagatedFrom.feature.id);
+        document.getElementById('Labeltxt').innerHTML = e.propagatedFrom.feature.id;
+
+
+    }
 </script>
 </body>
 </html>
+
+var obj = {tarif_provider: val}

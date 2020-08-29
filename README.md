@@ -28,9 +28,38 @@ As already stated, we faced several problems during our data collection and cons
 To allow a user to compare the available tariff plans for a given charging station we combined the following elements:
 * A leaflet webmap. The map uses the publicly available geoJSON from the Federal Spatial Data Infrastructure (FSDI) to visualize the charging stations.
 * The freely accessible FSDI API at api.geo.admin.ch to retrieve the full station and plug informations
-* Our static table with the tariff plans information.
+* Our static table (filled as a google sheet then transformed to JSON for the webapp) with the tariff plans information.
 
 When the user picks a charging station, the application retrieves the ID from the geoJSON and then uses it to make an API call to api.geo.admin.ch. This retrieves all the needed information about the available plugs at the station. The app then filters the tariff table to present the valid plans and the pricing information.
+
+Filter parameters are:
+<table>
+  <tr>
+    <th></th>
+    <th>API result attribute</th>
+    <th>Tariff table attribute</th>
+  </tr>
+  <tr>
+    <th>Provider<br>This looks for al the tariff plans valid for the selected station's operator</th>
+    <td>OperatorName</td>
+    <td>tariff_provier</td>
+  </tr>
+  <tr>
+    <th>KW<br>Some tariff plans depend on the available power at the plug.</th>
+    <td>QueryChargingFacilities</td>
+    <td>valid_kw</td>
+  </tr>
+  <tr>
+    <th>Time of the day<br>Some tariff plans depend on the time of the day.</th>
+    <td>-</td>
+    <td>start<br>end</td>
+  </tr>
+  <tr>
+    <th>Power time<br>Some tariff plans depend on power type (AC or DC).</th>
+    <td>QueryChargingFacilities</td>
+    <td>powertype</td>
+  </tr>
+</table>
 
 # Data model of the tariff table
 You can find the table [here](https://docs.google.com/spreadsheets/d/1dw7tkYa0nSNKVkIfXEMOxA0CAAqR0nYDYwAuvXVgSB0/edit#gid=0)
@@ -94,3 +123,27 @@ You can find the table [here](https://docs.google.com/spreadsheets/d/1dw7tkYa0nS
 
 # Known problems and possible ameliorations
 Ours is a rudimentary solution that must be considered as an early-stage POC.
+
+## The main issues are:
+* A static and still rudimentary tariff "database"
+* Incomplete tariff data
+* Data model has to be optimized
+* Filter to be revised
+* Not integrated with ich-tanke-strom.ch
+* Impossible to calculate the total cost of a charge
+* Still almost impossible for a user to make meaningful comparisons because of the different price calculations
+* Car parking costs are not considered
+
+## Outlook and needed ameliorations
+* Include more operators
+* Automatic fetching of updated tariff information
+* Integration of the data into ich-tanke-strom.ch
+* Integration user data such as car type, battery status, ...
+* Integration of parking costs
+* Develop a real webapp :smile:
+
+# Lessons learned
+* The data needs to be open, easily and freely accessible in order to develop such an applications
+* There is a need for a standard way to describe the costs ot make a meaningful comparison possible
+* It is a pleasure to work with the freely available DIEMO data (both the static JSON than via the FSDI API)
+* Open Data is nice!
